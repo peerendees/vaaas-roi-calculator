@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VaaS ROI Calculator - Professional Design</title>
+    <title>VaaS ROI Calculator - Professional</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,6 +51,90 @@
             margin: 0 auto; 
             padding: 0 2rem; 
         }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            color: var(--light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #9B4D2A 100%);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(214, 179, 102, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(214, 179, 102, 0.2);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Steps */
+        .steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, var(--accent) 0%, #E5C77A 100%);
+            color: var(--dark);
+            box-shadow: 0 0 30px rgba(214, 179, 102, 0.4);
+            transform: scale(1.1);
+        }
+
+        .step.inactive {
+            background: rgba(128, 51, 26, 0.05);
+            border: 2px solid rgba(214, 179, 102, 0.1);
+            color: var(--gray);
+        }
+
+        .step-connector {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent) 0%, rgba(214, 179, 102, 0.1) 100%);
+            opacity: 0.3;
+        }
         
         .form-card {
             background: rgba(128, 51, 26, 0.05);
@@ -60,7 +144,7 @@
             backdrop-filter: blur(20px);
             transition: all 0.3s ease;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
         }
 
         .form-card:hover {
@@ -84,7 +168,8 @@
             margin-bottom: 0.5rem; 
         }
         
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
@@ -95,7 +180,8 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(214, 179, 102, 0.1);
@@ -112,11 +198,158 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin: 0 0.5rem 0.5rem 0;
         }
 
         .btn:hover { 
             transform: translateY(-2px); 
             box-shadow: 0 10px 30px rgba(128, 51, 26, 0.4); 
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(128, 51, 26, 0.05);
+            border-color: var(--accent);
+        }
+
+        /* Templates Grid */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .template-card {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(128, 51, 26, 0.15);
+        }
+
+        .template-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .template-card h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-card p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .template-details {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .result-card h4 {
+            color: var(--accent);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .chart-title {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, rgba(128, 51, 26, 0.1), rgba(214, 179, 102, 0.1));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Export Section */
+        .export-section {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .export-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
         }
 
         .floating-element {
@@ -138,6 +371,11 @@
             50% { transform: translateY(-10px); } 
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         footer {
             margin-top: 4rem;
             padding: 2rem;
@@ -145,13 +383,13 @@
             border-top: 1px solid rgba(214, 179, 102, 0.1);
         }
 
-        footer p {
-            margin-bottom: 0.5rem;
-        }
-
         @media (max-width: 768px) {
             .hero { padding: 2rem 1rem; }
-            .form-card { padding: 1.5rem; margin: 0 1rem; }
+            .form-card { padding: 1.5rem; margin: 0 1rem 2rem; }
+            .step-connector { width: 2px; height: 30px; }
+            .steps { flex-direction: column; gap: 0.5rem; }
+            .templates-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
         }
     </style>
 </head>
@@ -168,21 +406,172 @@
     </section>
 
     <div class="container">
-        <div class="form-card">
-            <h2>💎 ROI Berechnung</h2>
-            
-            <div class="form-group">
-                <label>Monatliche Kosten (€)</label>
-                <input type="number" placeholder="1000" min="0">
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" onclick="showTab('calculator')">🧮 Rechner</button>
+            <button class="nav-btn" onclick="showTab('templates')">🏭 Branchenvorlagen</button>
+            <button class="nav-btn" onclick="showTab('results')">📊 Ergebnisse</button>
+        </nav>
+
+        <!-- Calculator Tab -->
+        <div id="calculator-tab" class="tab-content active">
+            <!-- Step Indicator -->
+            <div class="steps">
+                <div class="step active" id="step1">1</div>
+                <div class="step-connector"></div>
+                <div class="step inactive" id="step2">2</div>
+                <div class="step-connector"></div>
+                <div class="step inactive" id="step3">3</div>
             </div>
-            
-            <div class="form-group">
-                <label>Erwartete Einsparungen (€)</label>
-                <input type="number" placeholder="2000" min="0">
+
+            <!-- Step 1: Basic Information -->
+            <div id="step1-content" class="form-card">
+                <h2>📋 Grundinformationen</h2>
+                
+                <div class="form-group">
+                    <label for="companySize">Unternehmensgröße</label>
+                    <select id="companySize">
+                        <option value="">Bitte wählen...</option>
+                        <option value="small">Klein (1-50 MA)</option>
+                        <option value="medium">Mittel (51-250 MA)</option>
+                        <option value="large">Groß (250+ MA)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="industry">Branche</label>
+                    <select id="industry">
+                        <option value="">Bitte wählen...</option>
+                        <option value="tech">Technologie</option>
+                        <option value="finance">Finanzen</option>
+                        <option value="healthcare">Gesundheitswesen</option>
+                        <option value="retail">Einzelhandel</option>
+                        <option value="manufacturing">Produktion</option>
+                        <option value="logistics">Logistik</option>
+                        <option value="consulting">Beratung</option>
+                        <option value="education">Bildung</option>
+                        <option value="other">Sonstige</option>
+                    </select>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn" onclick="nextStep()">Weiter → Schritt 2</button>
+                </div>
             </div>
+
+            <!-- Step 2: Cost Analysis -->
+            <div id="step2-content" class="form-card" style="display: none;">
+                <h2>💰 Kostenanalyse</h2>
+                
+                <div class="form-group">
+                    <label for="monthlyPhoneCosts">Monatliche Telefoniekosten (€)</label>
+                    <input type="number" id="monthlyPhoneCosts" placeholder="1000" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="monthlyITCosts">Monatliche IT-Administrationskosten (€)</label>
+                    <input type="number" id="monthlyITCosts" placeholder="500" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="implementationCosts">Implementierungskosten VaaS (€)</label>
+                    <input type="number" id="implementationCosts" placeholder="5000" min="0">
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-secondary" onclick="previousStep()">← Zurück</button>
+                    <button class="btn" onclick="nextStep()">Weiter → Schritt 3</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Savings & ROI -->
+            <div id="step3-content" class="form-card" style="display: none;">
+                <h2>📈 Einsparungen & ROI</h2>
+                
+                <div class="form-group">
+                    <label for="monthlySavings">Erwartete monatliche Einsparungen (€)</label>
+                    <input type="number" id="monthlySavings" placeholder="2000" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="implementationTime">Zeit bis zur vollen Implementierung (Monate)</label>
+                    <input type="number" id="implementationTime" placeholder="3" min="1">
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-secondary" onclick="previousStep()">← Zurück</button>
+                    <button class="btn" onclick="calculateROI()">🧮 ROI Berechnen</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div id="templates-tab" class="tab-content">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem; font-size: 2rem;">🏭 Branchenvorlagen</h2>
             
-            <div style="text-align: center; margin-top: 2rem;">
-                <button class="btn">🚀 ROI Berechnen</button>
+            <div class="templates-grid">
+                <div class="template-card" onclick="loadTemplate('tech')">
+                    <div class="template-icon">💻</div>
+                    <h4>Technologie</h4>
+                    <p>Hohe IT-Kosten, agile Implementierung</p>
+                    <div class="template-details">
+                        Telefonie: 2000€ | IT: 1500€ | Zeit: 3 Monate | Ersparnis: 3500€
+                    </div>
+                </div>
+                
+                <div class="template-card" onclick="loadTemplate('finance')">
+                    <div class="template-icon">🏦</div>
+                    <h4>Finanzen</h4>
+                    <p>Compliance-orientiert, hohe Sicherheit</p>
+                    <div class="template-details">
+                        Telefonie: 3000€ | IT: 2000€ | Zeit: 6 Monate | Ersparnis: 5000€
+                    </div>
+                </div>
+                
+                <div class="template-card" onclick="loadTemplate('healthcare')">
+                    <div class="template-icon">🏥</div>
+                    <h4>Gesundheitswesen</h4>
+                    <p>24/7 Verfügbarkeit, strenger Datenschutz</p>
+                    <div class="template-details">
+                        Telefonie: 2500€ | IT: 1800€ | Zeit: 4 Monate | Ersparnis: 4000€
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('retail')">
+                    <div class="template-icon">🛍️</div>
+                    <h4>Einzelhandel</h4>
+                    <p>Multi-Location, Kundenservice-fokussiert</p>
+                    <div class="template-details">
+                        Telefonie: 1800€ | IT: 1200€ | Zeit: 3 Monate | Ersparnis: 2800€
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('manufacturing')">
+                    <div class="template-icon">🏭</div>
+                    <h4>Produktion</h4>
+                    <p>Robuste Systeme, Industrie 4.0</p>
+                    <div class="template-details">
+                        Telefonie: 2200€ | IT: 1600€ | Zeit: 5 Monate | Ersparnis: 3600€
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="loadTemplate('logistics')">
+                    <div class="template-icon">🚚</div>
+                    <h4>Logistik</h4>
+                    <p>Standortübergreifend, mobile Teams</p>
+                    <div class="template-details">
+                        Telefonie: 2800€ | IT: 1400€ | Zeit: 4 Monate | Ersparnis: 3800€
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Tab -->
+        <div id="results-tab" class="tab-content">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem; font-size: 2rem;">📊 ROI Berechnungsergebnis</h2>
+            
+            <div id="results-content" style="display: none;">
+                <!-- Results will be populated here -->
             </div>
         </div>
     </div>
@@ -197,5 +586,175 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStepDisplay();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepDisplay();
+            }
+        }
+
+        function updateStepDisplay() {
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById('step' + i + '-content').style.display = 'none';
+            }
+            
+            document.getElementById('step' + currentStep + '-content').style.display = 'block';
+            
+            for (let i = 1; i <= totalSteps; i++) {
+                const step = document.getElementById('step' + i);
+                if (i <= currentStep) {
+                    step.classList.remove('inactive');
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                    step.classList.add('inactive');
+                }
+            }
+        }
+
+        function loadTemplate(industry) {
+            const templates = {
+                tech: { phone: 2000, it: 1500, implementation: 3, savings: 3500 },
+                finance: { phone: 3000, it: 2000, implementation: 6, savings: 5000 },
+                healthcare: { phone: 2500, it: 1800, implementation: 4, savings: 4000 },
+                retail: { phone: 1800, it: 1200, implementation: 3, savings: 2800 },
+                manufacturing: { phone: 2200, it: 1600, implementation: 5, savings: 3600 },
+                logistics: { phone: 2800, it: 1400, implementation: 4, savings: 3800 }
+            };
+            
+            const template = templates[industry];
+            if (template) {
+                document.getElementById('monthlyPhoneCosts').value = template.phone;
+                document.getElementById('monthlyITCosts').value = template.it;
+                document.getElementById('implementationTime').value = template.implementation;
+                document.getElementById('monthlySavings').value = template.savings;
+                document.getElementById('industry').value = industry;
+                
+                showTab('calculator');
+                currentStep = 2;
+                updateStepDisplay();
+            }
+        }
+
+        function calculateROI() {
+            const phoneCosts = parseFloat(document.getElementById('monthlyPhoneCosts').value) || 0;
+            const itCosts = parseFloat(document.getElementById('monthlyITCosts').value) || 0;
+            const implementationCosts = parseFloat(document.getElementById('implementationCosts').value) || 0;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+            const implementationTime = parseFloat(document.getElementById('implementationTime').value) || 1;
+            
+            const totalMonthlyCosts = phoneCosts + itCosts;
+            const monthlyROI = monthlySavings - totalMonthlyCosts;
+            const yearlyROI = monthlyROI * 12;
+            const paybackPeriod = monthlyROI > 0 ? (implementationCosts / monthlyROI) : 0;
+            
+            const totalInvestment = implementationCosts;
+            const totalReturn = (monthlySavings * 12) - (totalMonthlyCosts * 12);
+            const roiPercentage = totalInvestment > 0 ? ((totalReturn - totalInvestment) / totalInvestment * 100) : 0;
+            
+            const totalSavingsYear1 = (monthlySavings * 12) - (totalMonthlyCosts * 12) - implementationCosts;
+            
+            const resultsDiv = document.getElementById('results-content');
+            resultsDiv.innerHTML = `
+                <div class="form-card">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Monatlicher ROI</h4>
+                            <div class="result-value">${monthlyROI.toFixed(2)} €</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Jährlicher ROI</h4>
+                            <div class="result-value">${yearlyROI.toFixed(2)} €</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Amortisationszeit</h4>
+                            <div class="result-value">${paybackPeriod > 0 ? paybackPeriod.toFixed(1) + ' Mon.' : 'N/A'}</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>ROI in %</h4>
+                            <div class="result-value">${roiPercentage.toFixed(1)} %</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">📈 ROI Entwicklung über 24 Monate</div>
+                    <div class="chart-placeholder">
+                        📊 Interaktive Diagramme werden hier angezeigt
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h2 style="color: var(--accent); margin-bottom: 1.5rem;">📊 Detaillierte Analyse</h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Gesamtkosten Jahr 1</h4>
+                            <div class="result-value">${((totalMonthlyCosts * 12) + implementationCosts).toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Gesamteinsparungen Jahr 1</h4>
+                            <div class="result-value">${(monthlySavings * 12).toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Netto-Gewinn Jahr 1</h4>
+                            <div class="result-value">${totalSavingsYear1.toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Break-Even Punkt</h4>
+                            <div class="result-value">${paybackPeriod > 0 ? 'Monat ' + Math.ceil(paybackPeriod) : 'N/A'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <h3>📄 Ergebnisse exportieren</h3>
+                    <button class="btn" onclick="exportToPDF()">📄 PDF Download</button>
+                    <button class="btn" onclick="exportToExcel()">📊 Excel Download</button>
+                    <button class="btn btn-secondary" onclick="shareResults()">🔗 Teilen</button>
+                </div>
+            `;
+            
+            resultsDiv.style.display = 'block';
+            showTab('results');
+        }
+
+        function exportToPDF() {
+            alert('PDF Export wird implementiert...');
+        }
+
+        function exportToExcel() {
+            alert('Excel Export wird implementiert...');
+        }
+
+        function shareResults() {
+            alert('Share-Funktion wird implementiert...');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStepDisplay();
+        });
+    </script>
 </body>
 </html>
