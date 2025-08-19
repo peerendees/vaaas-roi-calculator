@@ -868,3 +868,188 @@
             }
         }
     </script>
+
+    <!-- Chart.js for interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Chart generation functions
+        function createROIChart(monthlyROI, implementationCosts) {
+            const ctx = document.getElementById('roiChart');
+            if (!ctx) return;
+            
+            // Generate 24 months of data
+            const months = [];
+            const cumulativeROI = [];
+            let cumulative = -implementationCosts; // Start with negative implementation cost
+            
+            for (let i = 1; i <= 24; i++) {
+                months.push(`Monat ${i}`);
+                cumulative += monthlyROI;
+                cumulativeROI.push(cumulative);
+            }
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Kumulativer ROI (€)',
+                        data: cumulativeROI,
+                        borderColor: '#D6B366',
+                        backgroundColor: 'rgba(214, 179, 102, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#D6B366'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: { color: '#9CA3AF' },
+                            grid: { color: 'rgba(214, 179, 102, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9CA3AF' },
+                            grid: { color: 'rgba(214, 179, 102, 0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createCostChart(phoneCosts, itCosts, monthlySavings) {
+            const ctx = document.getElementById('costChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Telefonie', 'IT-Administration', 'VaaS Einsparungen'],
+                    datasets: [{
+                        data: [phoneCosts, itCosts, monthlySavings],
+                        backgroundColor: [
+                            '#80331A',
+                            '#9B4D2A', 
+                            '#D6B366'
+                        ],
+                        borderColor: '#1A1A1A',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#D6B366'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update calculateROI function to include charts
+        function calculateROI() {
+            const phoneCosts = parseFloat(document.getElementById('monthlyPhoneCosts').value) || 0;
+            const itCosts = parseFloat(document.getElementById('monthlyITCosts').value) || 0;
+            const implementationCosts = parseFloat(document.getElementById('implementationCosts').value) || 0;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+            const implementationTime = parseFloat(document.getElementById('implementationTime').value) || 1;
+            
+            const totalMonthlyCosts = phoneCosts + itCosts;
+            const monthlyROI = monthlySavings - totalMonthlyCosts;
+            const yearlyROI = monthlyROI * 12;
+            const paybackPeriod = monthlyROI > 0 ? (implementationCosts / monthlyROI) : 0;
+            
+            const totalInvestment = implementationCosts;
+            const totalReturn = (monthlySavings * 12) - (totalMonthlyCosts * 12);
+            const roiPercentage = totalInvestment > 0 ? ((totalReturn - totalInvestment) / totalInvestment * 100) : 0;
+            
+            const totalSavingsYear1 = (monthlySavings * 12) - (totalMonthlyCosts * 12) - implementationCosts;
+            
+            const resultsDiv = document.getElementById('results-content');
+            resultsDiv.innerHTML = `
+                <div class="form-card">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Monatlicher ROI</h4>
+                            <div class="result-value">${monthlyROI.toFixed(2)} €</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Jährlicher ROI</h4>
+                            <div class="result-value">${yearlyROI.toFixed(2)} €</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Amortisationszeit</h4>
+                            <div class="result-value">${paybackPeriod > 0 ? paybackPeriod.toFixed(1) + ' Mon.' : 'N/A'}</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>ROI in %</h4>
+                            <div class="result-value">${roiPercentage.toFixed(1)} %</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">📈 ROI Entwicklung über 24 Monate</div>
+                    <canvas id="roiChart" width="400" height="200"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">💰 Kostenverteilung (monatlich)</div>
+                    <canvas id="costChart" width="400" height="200"></canvas>
+                </div>
+
+                <div class="form-card">
+                    <h2 style="color: var(--accent); margin-bottom: 1.5rem;">📊 Detaillierte Analyse</h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Gesamtkosten Jahr 1</h4>
+                            <div class="result-value">${((totalMonthlyCosts * 12) + implementationCosts).toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Gesamteinsparungen Jahr 1</h4>
+                            <div class="result-value">${(monthlySavings * 12).toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Netto-Gewinn Jahr 1</h4>
+                            <div class="result-value">${totalSavingsYear1.toFixed(2)} €</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Break-Even Punkt</h4>
+                            <div class="result-value">${paybackPeriod > 0 ? 'Monat ' + Math.ceil(paybackPeriod) : 'N/A'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <h3>📄 Ergebnisse exportieren</h3>
+                    <button class="btn" onclick="exportToPDF()">📄 PDF Download</button>
+                    <button class="btn" onclick="exportToExcel()">�� Excel Download</button>
+                    <button class="btn btn-secondary" onclick="shareResults()">🔗 Teilen</button>
+                </div>
+            `;
+            
+            resultsDiv.style.display = 'block';
+            showTab('results');
+            
+            // Generate charts after DOM update
+            setTimeout(() => {
+                createROIChart(monthlyROI, implementationCosts);
+                createCostChart(phoneCosts, itCosts, monthlySavings);
+            }, 100);
+        }
+    </script>
