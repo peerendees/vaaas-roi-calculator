@@ -758,3 +758,113 @@
     </script>
 </body>
 </html>
+
+    <!-- Add Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+        // Enhanced Export Functions
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get calculation results
+            const phoneCosts = parseFloat(document.getElementById('monthlyPhoneCosts').value) || 0;
+            const itCosts = parseFloat(document.getElementById('monthlyITCosts').value) || 0;
+            const implementationCosts = parseFloat(document.getElementById('implementationCosts').value) || 0;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+            
+            const monthlyROI = monthlySavings - (phoneCosts + itCosts);
+            const yearlyROI = monthlyROI * 12;
+            const paybackPeriod = monthlyROI > 0 ? (implementationCosts / monthlyROI) : 0;
+            
+            // PDF Content
+            doc.setFontSize(20);
+            doc.text('VaaS ROI Calculator - Ergebnisbericht', 20, 30);
+            
+            doc.setFontSize(12);
+            doc.text(`Datum: ${new Date().toLocaleDateString('de-DE')}`, 20, 50);
+            
+            doc.text('KOSTENANALYSE:', 20, 70);
+            doc.text(`• Monatliche Telefoniekosten: ${phoneCosts.toFixed(2)} €`, 25, 80);
+            doc.text(`• Monatliche IT-Kosten: ${itCosts.toFixed(2)} €`, 25, 90);
+            doc.text(`• Implementierungskosten: ${implementationCosts.toFixed(2)} €`, 25, 100);
+            
+            doc.text('ROI ERGEBNISSE:', 20, 120);
+            doc.text(`• Monatlicher ROI: ${monthlyROI.toFixed(2)} €`, 25, 130);
+            doc.text(`• Jährlicher ROI: ${yearlyROI.toFixed(2)} €`, 25, 140);
+            doc.text(`• Amortisationszeit: ${paybackPeriod > 0 ? paybackPeriod.toFixed(1) + ' Monate' : 'N/A'}`, 25, 150);
+            
+            doc.save('VaaS_ROI_Berechnung.pdf');
+        }
+
+        function exportToExcel() {
+            const phoneCosts = parseFloat(document.getElementById('monthlyPhoneCosts').value) || 0;
+            const itCosts = parseFloat(document.getElementById('monthlyITCosts').value) || 0;
+            const implementationCosts = parseFloat(document.getElementById('implementationCosts').value) || 0;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+            
+            const monthlyROI = monthlySavings - (phoneCosts + itCosts);
+            const yearlyROI = monthlyROI * 12;
+            const paybackPeriod = monthlyROI > 0 ? (implementationCosts / monthlyROI) : 0;
+            
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Input data
+            const inputData = [
+                ['VaaS ROI Calculator - Eingabedaten', ''],
+                ['', ''],
+                ['Parameter', 'Wert'],
+                ['Monatliche Telefoniekosten (€)', phoneCosts],
+                ['Monatliche IT-Kosten (€)', itCosts],
+                ['Implementierungskosten (€)', implementationCosts],
+                ['Erwartete monatliche Einsparungen (€)', monthlySavings]
+            ];
+            
+            // Results data
+            const resultsData = [
+                ['', ''],
+                ['ROI Ergebnisse', ''],
+                ['Kennzahl', 'Wert'],
+                ['Monatlicher ROI (€)', monthlyROI.toFixed(2)],
+                ['Jährlicher ROI (€)', yearlyROI.toFixed(2)],
+                ['Amortisationszeit (Monate)', paybackPeriod > 0 ? paybackPeriod.toFixed(1) : 'N/A'],
+                ['ROI Prozent (%)', ((yearlyROI / implementationCosts) * 100).toFixed(1)]
+            ];
+            
+            const allData = [...inputData, ...resultsData];
+            const ws = XLSX.utils.aoa_to_sheet(allData);
+            
+            XLSX.utils.book_append_sheet(wb, ws, 'ROI Berechnung');
+            XLSX.writeFile(wb, 'VaaS_ROI_Berechnung.xlsx');
+        }
+
+        function shareResults() {
+            const phoneCosts = parseFloat(document.getElementById('monthlyPhoneCosts').value) || 0;
+            const itCosts = parseFloat(document.getElementById('monthlyITCosts').value) || 0;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+            const monthlyROI = monthlySavings - (phoneCosts + itCosts);
+            const yearlyROI = monthlyROI * 12;
+            
+            const shareText = `VaaS ROI Berechnung:\n\n` +
+                            `💰 Monatlicher ROI: ${monthlyROI.toFixed(2)} €\n` +
+                            `📈 Jährlicher ROI: ${yearlyROI.toFixed(2)} €\n\n` +
+                            `Berechnet mit dem VaaS ROI Calculator`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'VaaS ROI Berechnung',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: Copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Ergebnisse in die Zwischenablage kopiert!');
+                });
+            }
+        }
+    </script>
