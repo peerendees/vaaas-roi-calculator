@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaaS ROI Calculator - MEGA ELEGANT DESIGN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #80331A;
+            --accent: #D6B366;
+            --dark: #0A0A0A;
+            --light: #FFFFFF;
+            --gray: #9CA3AF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #050505 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: radial-gradient(circle, rgba(128, 51, 26, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p { font-size: 1.25rem; color: var(--gray); margin: 0 auto 3rem; max-width: 600px; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        .form-card {
+            background: rgba(128, 51, 26, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(128, 51, 26, 0.1);
+        }
+
+        .form-card h2 { color: var(--accent); font-size: 1.8rem; text-align: center; margin-bottom: 2rem; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(214, 179, 102, 0.1);
+            border-radius: 12px;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(214, 179, 102, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #9B4D2A 100%);
+            color: var(--light);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(128, 51, 26, 0.4); }
+
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 20px;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 10%; }
+        .floating-element:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 15%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+
+    <section class="hero">
+        <div class="container">
+            <h1>VaaS ROI Calculator</h1>
+            <p>🎯 MEGA ELEGANTES DESIGN mit berent.ai Farben (#80331A + #D6B366)!</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="form-card">
+            <h2>💎 Neues Elegantes Design ist LIVE!</h2>
+            
+            <div class="form-group">
+                <label>Monatliche Kosten (€)</label>
+                <input type="number" placeholder="1000" min="0">
+            </div>
+            
+            <div class="form-group">
+                <label>Erwartete Einsparungen (€)</label>
+                <input type="number" placeholder="2000" min="0">
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn">🚀 ROI Berechnen</button>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(214, 179, 102, 0.1); border-radius: 12px; text-align: center;">
+                <h3 style="color: var(--accent);">✨ ENDLICH das richtige Design!</h3>
+                <p style="color: var(--gray); margin-top: 0.5rem;">
+                    berent.ai Farben + 3D Elements + Moderne UI = MEGA ELEGANT! 🎨
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
