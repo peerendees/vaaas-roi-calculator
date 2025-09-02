@@ -174,10 +174,23 @@
             padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(214, 179, 102, 0.1);
-            border-radius: 12px;
+            border-radius: 8px;
             color: var(--light);
             font-size: 1rem;
             transition: all 0.3s ease;
+            height: 56px;
+        }
+
+        /* Flache, moderne Dropdown-Gestaltung */
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: rgba(255, 255, 255, 0.05) url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6B366' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 1rem center;
+            background-size: 20px;
+            padding-right: 3rem;
+            cursor: pointer;
+            border: 2px solid rgba(214, 179, 102, 0.2);
         }
 
         .form-group input:focus,
@@ -186,6 +199,12 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(214, 179, 102, 0.1);
             background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .form-group select:hover {
+            border-color: rgba(214, 179, 102, 0.4);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .btn {
@@ -576,16 +595,7 @@
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p style="color: var(--gray); font-size: 1rem;">
-                Professioneller VaaS ROI Calculator für präzise Kostenanalysen und Investitionsplanung.
-            </p>
-            <p style="color: var(--accent); font-size: 0.9rem;">
-                Entwickelt mit modernem Design und berent.ai Farbpalette für optimale Benutzererfahrung.
-            </p>
-        </div>
-    </footer>
+
 
     <script>
         let currentStep = 1;
