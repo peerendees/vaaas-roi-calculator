@@ -1,7 +1,13 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  // Keine React-Plugins - deploye die HTML-Version
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html'
+      }
+    }
+  }
 })
