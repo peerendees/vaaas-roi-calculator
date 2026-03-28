@@ -410,9 +410,29 @@
             .templates-grid { grid-template-columns: 1fr; }
             .results-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
         }
+
+        /* Back Navigation */
+        .header-back {
+            display: inline-block;
+            padding: 0.75rem 1.25rem;
+            margin: 1rem 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .header-back:hover {
+            color: var(--light);
+            transform: translateX(-3px);
+        }
     </style>
 </head>
 <body>
+    <a href="https://berent.ai/apps" class="header-back" onclick="event.preventDefault(); if(window.opener) { window.close(); } else if(document.referrer.includes('berent.ai')) { history.back(); } else { window.location.href='https://berent.ai/apps'; }">← berent.ai</a>
+
     <div class="floating-element"></div>
     <div class="floating-element"></div>
     <div class="floating-element"></div>
